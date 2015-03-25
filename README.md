@@ -5,7 +5,7 @@ This project illustrates a proof of concept for how you can use a combination
 of [pytest] and [ciscoconfparse] to build robust tests for your router, switch,
 and firewall configurations.
 
-This directory is where audits are defined.  We use [pytest] to audit 
+The ``src/`` directory  is where audits are defined.  We use [pytest] to audit 
 configurations based on test definitions and the framework defined in:
 
 - ``conftest.py``: Defines how tests are run, and what parameters are passed to tests
@@ -18,7 +18,7 @@ Installation
 
 - Copy or clone this repository
 - Install [ciscoconfparse], ``pip install --upgrade ciscoconfparse``
-- Install [pytest], ``pip install --upgrade pytest``
+- Install [pytest], ``pip install --upgrade pytest==2.4.6``
 
 Running demo tests
 ==================
@@ -30,7 +30,7 @@ Running demo tests
 License and Copyright
 =====================
 
-Copyright (c) 2015, CrackerJackMack and David Michael Pennington
+Copyright (c) 2015, Kevin Landreth and David Michael Pennington
 Some rights reserved.
 
 The above copyright notice and this permission notice shall be included in
@@ -39,5 +39,5 @@ all copies or substantial portions of the Software.
 Licensed permissively with the [MIT license]
 
 [pytest]: https://pytest.org/ "pytest"
-[ciscoconfparse]: http://github.com/mpenning/ciscoconfparse/
+[ciscoconfparse]: http://github.com/mpenning/ciscoconfparse/ "ciscoconfparse"
 [MIT license]: http://opensource.org/licenses/MIT
