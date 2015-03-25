@@ -1,9 +1,11 @@
+import re
+
 import pytest
 
 """
 The MIT License (MIT)
 
-Copyright (c) 2015 by CrackerJackMack, David Michael Pennington and
+Copyright (c) 2015 by Kevin Landreth, David Michael Pennington and
 contributors.  See AUTHORS for more details.
 
 Some rights reserved.
@@ -34,14 +36,12 @@ SOFTWARE.
     r'service timestamps debug datetime msec localtime show-timezone',
     r'service timestamps log datetime msec localtime show-timezone',
     r'clock timezone MST -7',
-    r'clock summer-time MDT recurring',
     r'service tcp-keepalives-in',
     r'service tcp-keepalives-out',
     r'ip tcp selective-ack',
     r'ip tcp timestamp',
     r'ip tcp synwait-time 10',
     r'ip tcp path-mtu-discovery',
-    r'snmp-server community SoMeThaNGwIErd RW 99',
     r'memory reserve critical 4096',])
 def test_basics_exact(device, required_line):
     """Required global configurations"""
@@ -51,11 +51,33 @@ def test_basics_exact(device, required_line):
 ### Required partial config lines
 ###
 @pytest.mark.parametrize("required_line", [
+    r'clock summer-time MDT recurring',
     r'enable secret',
     r'hostname',])
 def test_basics_partial(device, required_line):
     """Required global configurations"""
     assert bool(device.find_lines(r'^'+required_line, exactmatch=False))
+
+
+###
+### SNMP checks
+###
+@pytest.mark.parametrize("required_line", [
+    r'snmp-server community {0} [rR][oO] 99'.format(re.escape('g1v3mE$t@t$')),
+    r'snmp-server community {0} [rR][wW] 99'.format(re.escape('SoMeThaNGwIErd')),
+    ])
+def test_snmp(device, required_line):
+    """Required global configurations"""
+    assert bool(device.find_lines(required_line, exactmatch=True))
+
+@pytest.mark.parametrize("rejected_line", [
+    r'snmp-server\scommunity\s\S+\s+[rR][wW]',
+    r'snmp-server\scommunity\s\S+\s+[rR][oO]',
+    ])
+def test_snmp_acl_required(device, rejected_line):
+    """Reject all SNMP communities with no ACLs"""
+    assert not bool(device.find_lines(rejected_line, exactmatch=True))
+
 
 ###
 ### Required logging configurations
@@ -86,7 +108,7 @@ def test_services_disabled(device, required_line):
 ###
 @pytest.mark.parametrize("rejected_line", [
     r'service internal',  # You should know what you're doing if you turn it on
-    r'enable password',   # Disable insecure enable passwords
+    r'enable password',   # Reject insecure enable passwords
     r'ip http server',
     r'ip http secure-server', 
     r'ntp master',
