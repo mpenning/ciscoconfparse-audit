@@ -5,8 +5,7 @@ username = mpenning
 intree=1
 
 [paths]
-default = https://mpenning@bitbucket.org/mpenning/ciscoconfparse-audit
-git = git+ssh://git@github.com:mpenning/ciscoconfparse-audit.git
+default = git+ssh://git@github.com:mpenning/ciscoconfparse-audit.git
 
 [hooks]
 outgoing = hg push git+ssh://git@github.com:mpenning/ciscoconfparse-audit.git
