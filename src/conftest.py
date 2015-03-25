@@ -8,7 +8,7 @@ import pytest
 """
 The MIT License (MIT)
 
-Copyright (c) 2015 by CrackerJackMack, David Michael Pennington and
+Copyright (c) 2015 by Kevin Landreth, David Michael Pennington and
 contributors.  See AUTHORS for more details.
 
 Some rights reserved.

@@ -6,7 +6,7 @@ import pytest
 """
 The MIT License (MIT)
 
-Copyright (c) 2015 by CrackerJackMack, David Michael Pennington and
+Copyright (c) 2015 by Kevin Landreth, David Michael Pennington and
 contributors.  See AUTHORS for more details.
 
 Some rights reserved.
@@ -99,7 +99,7 @@ def test_uplinks(device, interface):
     # this could be lag
     if uplink.re_search('[Pp]ort-channel'):
         uplink = device.find_objects('^interface \S+?thernet\s*{0}'
-                                 .format(uplink_port))[0]
+            .format(uplink_port))[0]
     else:
         # FIXME
         pass
